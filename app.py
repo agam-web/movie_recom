@@ -227,16 +227,16 @@ def server_error(e):
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
-if __name__ == "__main__":
-    csv_path = app.config["CSV_PATH"]
-    if not os.path.exists(csv_path):
-        print(f"[ERROR] '{csv_path}' not found. "
-              f"Set the MOVIES_CSV env var or place movies.csv inside Data/")
-    else:
-        load_model(csv_path)
 
-    app.run(
-        host  = os.environ.get("HOST", "0.0.0.0"),
-        port  = int(os.environ.get("PORT", 5000)),
-        debug = os.environ.get("FLASK_DEBUG", "false").lower() == "true",
-    )
+csv_path = app.config["CSV_PATH"]
+if not os.path.exists(csv_path):
+        print(f"[ERROR] '{csv_path}' not found. "
+            f"Set the MOVIES_CSV env var or place movies.csv inside Data/")
+else:
+    load_model(csv_path)
+
+app.run(
+    host  = os.environ.get("HOST", "0.0.0.0"),
+    port  = int(os.environ.get("PORT", 5000)),
+    debug = os.environ.get("FLASK_DEBUG", "false").lower() == "true",
+)
