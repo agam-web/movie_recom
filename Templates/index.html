@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CineMatch — Movie Recommender</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Cinematic grain overlay -->
+  <div class="grain"></div>
+
+  <!-- Floating background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="wrapper">
+
+    <!-- ── HEADER ── -->
+    <header class="site-header">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">CineMatch</span>
+      </div>
+      <p class="tagline"><em>Your taste, amplified.</em></p>
+    </header>
+
+    <!-- ── SEARCH SECTION (shown immediately) ── -->
+    <section class="search-section" id="searchSection">
+      <div class="search-card">
+
+        <!-- Badge injected by Flask at render time -->
+        <div class="dataset-badge" id="datasetBadge">
+          ✦ {{ num_movies | default('–') }} movies ready
+        </div>
+
+        <h1 class="search-title">What did you love watching?</h1>
+        <p class="search-sub">Type any movie title and discover your next obsession.</p>
+
+        <div class="search-bar-wrap">
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="movieInput"
+              class="search-input"
+              placeholder="e.g. The Dark Knight, Inception, Interstellar…"
+              autocomplete="off"
+            />
+            <!-- Autocomplete dropdown -->
+            <ul class="autocomplete-list hidden" id="autocompleteList"></ul>
+          </div>
+          <button class="btn btn-primary" id="recommendBtn">
+            <span class="btn-text">Find Films</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+
+        <div id="matchInfo" class="match-info hidden"></div>
+      </div>
+    </section>
+
+    <!-- ── LOADING ── -->
+    <div class="loader hidden" id="loader">
+      <div class="loader-reel"></div>
+      <p class="loader-text">Searching the catalogue…</p>
+    </div>
+
+    <!-- ── RESULTS SECTION ── -->
+    <section class="results-section hidden" id="resultsSection">
+      <div class="results-header">
+        <h2>Because you liked <em id="matchedTitle"></em></h2>
+        <p class="results-sub">Sorted by content similarity · TF-IDF + Cosine Similarity</p>
+      </div>
+
+      <div class="movie-grid" id="movieGrid"></div>
+
+      <button class="btn btn-outline search-again" id="searchAgainBtn">← Search again</button>
+    </section>
+
+    <!-- ── STATS FOOTER ── -->
+    <footer class="stats-bar">
+      <span>{{ num_movies | default('–') }} movies</span>
+      <span class="stat-sep">·</span>
+      <span>TF-IDF + Cosine Similarity</span>
+      <span class="stat-sep">·</span>
+      <span>Server-side model</span>
+    </footer>
+
+  </div><!-- /wrapper -->
+
+  <script src="{{ url_for('static', filename='javasc.js') }}"></script>
+</body>
+</html>
